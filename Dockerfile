@@ -42,7 +42,7 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/root/go/pkg/mod \
     GOWORK=off go build \
     -mod=readonly \
-    -tags "netgo,ledger,muslc" \
+    -tags ${BUILD_TAGS} \
     -ldflags \
     "-X github.com/cosmos/cosmos-sdk/version.Name="osmosis" \
     -X github.com/cosmos/cosmos-sdk/version.AppName="osmosisd" \
@@ -66,8 +66,8 @@ ENV HOME /osmosis
 WORKDIR $HOME
 
 EXPOSE 26656
-EXPOSE 26657
-EXPOSE 1317
+EXPOSE 26658
+EXPOSE 1318
 # Note: uncomment the line below if you need pprof in localosmosis
 # We disable it by default in out main Dockerfile for security reasons
 # EXPOSE 6060

@@ -20,13 +20,23 @@ install_prerequisites () {
     apk add dasel
 }
 
+edit_app_toml () {
+  APP=$CONFIG_FOLDER/app.toml
+
+  dasel put -f $APP '.api.address' -v 'tcp://0.0.0.0:1317'
+  dasel put -f $APP '.grpc.address' -v '0.0.0.0:9090'
+  dasel put -f $APP '.grpc-web.address' -v '0.0.0.0:9091'
+  dasel put -f $APP '.osmosis-sqs.address' -v '0.0.0.0:50051'
+
+}
+
 edit_genesis () {
 
     GENESIS=$CONFIG_FOLDER/genesis.json
 
     # Update staking module
     dasel put -t string -f $GENESIS '.app_state.staking.params.bond_denom' -v 'uosmo'
-    dasel put -t string -f $GENESIS '.app_state.staking.params.unbonding_time' -v '240s'
+    # dasel put -t string -f $GENESIS '.app_state.staking.params.unbonding_time' -v '240s'
 
     # Update bank module
     dasel put -t string -f $GENESIS '.app_state.bank.denom_metadata.[].description' -v 'Registered denom uion for localosmosis testing'
@@ -49,23 +59,23 @@ edit_genesis () {
     dasel put -t string -f $GENESIS '.app_state.crisis.constant_fee.denom' -v 'uosmo'
 
     # Update gov module
-    dasel put -t string -f $GENESIS '.app_state.gov.voting_params.voting_period' -v '60s'
+    # dasel put -t string -f $GENESIS '.app_state.gov.voting_params.voting_period' -v '60s'
     dasel put -t string -f $GENESIS '.app_state.gov.params.min_deposit.[0].denom' -v 'uosmo'
 
     # Update epochs module
-    dasel put -t string -f $GENESIS '.app_state.epochs.epochs.[1].duration' -v "60s"
+    # dasel put -t string -f $GENESIS '.app_state.epochs.epochs.[1].duration' -v "60s"
 
     # Update poolincentives module
-    dasel put -t string -f $GENESIS '.app_state.poolincentives.lockable_durations.[0]' -v "120s"
-    dasel put -t string -f $GENESIS '.app_state.poolincentives.lockable_durations.[1]' -v "180s"
-    dasel put -t string -f $GENESIS '.app_state.poolincentives.lockable_durations.[2]' -v "240s"
+    # dasel put -t string -f $GENESIS '.app_state.poolincentives.lockable_durations.[0]' -v "120s"
+    # dasel put -t string -f $GENESIS '.app_state.poolincentives.lockable_durations.[1]' -v "180s"
+    # dasel put -t string -f $GENESIS '.app_state.poolincentives.lockable_durations.[2]' -v "240s"
     dasel put -t string -f $GENESIS '.app_state.poolincentives.params.minted_denom' -v "uosmo"
 
     # Update incentives module
-    dasel put -t string -f $GENESIS '.app_state.incentives.lockable_durations.[0]' -v "1s"
-    dasel put -t string -f $GENESIS '.app_state.incentives.lockable_durations.[1]' -v "120s"
-    dasel put -t string -f $GENESIS '.app_state.incentives.lockable_durations.[2]' -v "180s"
-    dasel put -t string -f $GENESIS '.app_state.incentives.lockable_durations.[3]' -v "240s"
+    # dasel put -t string -f $GENESIS '.app_state.incentives.lockable_durations.[0]' -v "1s"
+    # dasel put -t string -f $GENESIS '.app_state.incentives.lockable_durations.[1]' -v "120s"
+    # dasel put -t string -f $GENESIS '.app_state.incentives.lockable_durations.[2]' -v "180s"
+    # dasel put -t string -f $GENESIS '.app_state.incentives.lockable_durations.[3]' -v "240s"
     dasel put -t string -f $GENESIS '.app_state.incentives.params.distr_epoch_identifier' -v "hour"
 
     # Update mint module
@@ -202,6 +212,7 @@ then
     install_prerequisites
     edit_genesis
     add_genesis_accounts
+    edit_app_toml
     edit_config
     enable_cors
 fi

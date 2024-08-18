@@ -23,14 +23,14 @@ services:
     command:
       - $STATE
     ports:
-      - 26657:26657
-      - 1317:1317
-      - 9090:9090
+      - 26658:26657
+      - 1318:1317
+      - 9094:9090
       - 9091:9091
       - 6060:6060
       - 9092:9092
-    links:
-      - redis
+    network_mode: "host"   
+
    # Enable Redis for sidecar query server
   redis:
     image: redis/redis-stack:7.2.0-v3

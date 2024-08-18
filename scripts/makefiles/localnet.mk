@@ -46,7 +46,7 @@ localnet-build:
 	@DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker compose -f tests/localosmosis/docker-compose.yml build
 
 localnet-start:
-	@STATE="" docker compose -f tests/localosmosis/docker-compose.yml up
+	@STATE="" docker compose -f tests/localosmosis/docker-compose.yml up --build
 
 localnet-startd:
 	@STATE="" docker compose -f tests/localosmosis/docker-compose.yml up -d
