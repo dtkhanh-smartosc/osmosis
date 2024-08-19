@@ -66,8 +66,8 @@ ENV HOME /osmosis
 WORKDIR $HOME
 
 EXPOSE 26656
-EXPOSE 26658
-EXPOSE 1318
+EXPOSE 26657
+EXPOSE 1317
 # Note: uncomment the line below if you need pprof in localosmosis
 # We disable it by default in out main Dockerfile for security reasons
 # EXPOSE 6060
